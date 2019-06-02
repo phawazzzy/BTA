@@ -7,5 +7,6 @@ const controller = require("../controllers/frontendController")
 //   res.render('index', { title: 'Express' });
 // });
 router.get("/", controller.homepage);
+router.get("/register", controller.register);
 
 module.exports = router;
