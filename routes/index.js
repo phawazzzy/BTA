@@ -10,6 +10,7 @@ router.post("/check", controller.postCode);
 router.post("/ValCode", controller.validateCode);
 router.get("/signup", controller.signup);
 
+router.get("/register", controller.register);
 
 module.exports = router;
 

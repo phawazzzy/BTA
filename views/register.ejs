@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%=title %></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+</head>
+
+<body class="bg-white">
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <a class="navbar-brand" href="#">BSH</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Main -->
+    <div id="main">
+        <div class="col-md-5 mx-auto col-sm-8 hide-sm m-5">
+            <div class="rounded bg-light">
+                <form class="text-center p-5">
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <!-- First name -->
+                            <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
+                        </div>
+                        <div class="col">
+                            <!-- Last name -->
+                            <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
+                        </div>
+                    </div>
+                    <!-- Email -->
+                    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4"
+                        placeholder="E-mail">
+
+                    <!-- Phone No -->
+                    <input type="phone" id="phoneNum" class="form-control mb-4" placeholder="Phone Number">
+
+                    <!-- Matric No -->
+                    <input type="number" id="matricNum" class="form-control mb-4" placeholder="Matric Number">
+                    
+                    <!-- CGPA -->
+                    <input type="number" id="cgpa" class="form-control mb-4" placeholder="Current CGPA">
+
+                    <!-- Gender -->
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="male" name="male" class="custom-control-input">
+                        <label class="custom-control-label" for="male">Male</label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="female" name="female" class="custom-control-input">
+                        <label class="custom-control-label" for="female">female</label>
+                      </div>
+
+                    <!-- Password -->
+                    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4"
+                        placeholder="Password">
+
+
+                    <!-- Sign in button -->
+                    <button class="btn btn-info btn-block my-4" type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+        <div class="container text-center">
+            <small>Copyright &copy; BCH</small>
+        </div>
+    </footer>
+</body>
+
+</html>

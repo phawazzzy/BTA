@@ -7,9 +7,15 @@ a {
   color: #00B7FF;
 }
 
+<<<<<<< HEAD
 #main text{
   font-size: 65px;
   text-shadow: 0 0 20px black;
+=======
+#main p{
+  font-size: 65px;
+  text-shadow: 0px 0px 20px rgb(2, 2, 2);
+>>>>>>> Robogiek
 }
 
 #overlay{

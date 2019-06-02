@@ -34,3 +34,8 @@ exports.postCode = async (req, res, next)=>{
 
     res.render("postcode", {})
 }
+
+
+exports.register = (req, res, next)=>{
+    res.render("register", {title: "register"})
+}
