@@ -6,9 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><%=title %></title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 </head>
+<style>
+    body {
+        background: url("../images/memphis-mini.png")
+    }
+</style>
 
 <body class="bg-white">
     <!-- Header -->
@@ -41,36 +46,42 @@
                     <div class="form-row mb-4">
                         <div class="col">
                             <!-- First name -->
-                            <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
+                            <input type="text" id="defaultRegisterFormFirstName" class="form-control"
+                                placeholder="First name">
                         </div>
                         <div class="col">
                             <!-- Last name -->
-                            <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
+                            <input type="text" id="defaultRegisterFormLastName" class="form-control"
+                                placeholder="Last name">
                         </div>
                     </div>
                     <!-- Email -->
-                    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4"
-                        placeholder="E-mail">
+                    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
 
                     <!-- Phone No -->
                     <input type="phone" id="phoneNum" class="form-control mb-4" placeholder="Phone Number">
 
                     <!-- Matric No -->
                     <input type="number" id="matricNum" class="form-control mb-4" placeholder="Matric Number">
-                    
+
                     <!-- CGPA -->
                     <input type="number" id="cgpa" class="form-control mb-4" placeholder="Current CGPA">
 
                     <!-- Gender -->
-                    <div class="custom-control custom-radio">
-                        <input type="radio" id="male" name="male" class="custom-control-input">
-                        <label class="custom-control-label" for="male">Male</label>
-                      </div>
-                      <div class="custom-control custom-radio">
-                        <input type="radio" id="female" name="female" class="custom-control-input">
-                        <label class="custom-control-label" for="female">female</label>
-                      </div>
-
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="male" name="Gender" class="custom-control-input">
+                                <label class="custom-control-label" for="male">Male</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="female" name="Gender" class="custom-control-input">
+                                <label class="custom-control-label" for="female">female</label>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Password -->
                     <input type="password" id="defaultLoginFormPassword" class="form-control mb-4"
                         placeholder="Password">
