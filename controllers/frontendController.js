@@ -12,7 +12,7 @@ exports.validateCode = async(req, res, next)=>{
     userCode = req.body.code;
     let codes =  await code.findOne({code:userCode})
     if (codes && codes.isRegistered == true){
-        console.log(codes)
+        console.log(userCode)
         res.render("signup", {})
     } else{
     res.redirect("/")
