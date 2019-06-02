@@ -7,6 +7,11 @@ a {
   color: #00B7FF;
 }
 
+#main text{
+  font-size: 65px;
+  text-shadow: 0 0 20px black;
+}
+
 #overlay{
   width: 100%; /* Full width (cover the whole page) */
   height: 100%; /* Full height (cover the whole page) */
