@@ -40,11 +40,16 @@ exports.postCode = async (req, res, next)=>{
 
 
 exports.register = (req, res, next)=>{
-    res.render("register", {title: "register"})
+    let success = req.flash("success")
+
+    res.render("register", {title: "register", success})
 }
 
 exports.login = (req, res, next)=>{
-    res.render("login", {})
+    let loginError = req.flash("loginError")
+    let error = req.flash('PleaseLogin')
+    let passwordError = req.flash('passwordError')
+    res.render("login", {error, loginError, passwordError})
 }
 
 exports.profile = async(req, res, next)=>{

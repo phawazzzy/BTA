@@ -49,6 +49,7 @@ passport.use('local.register', new localStrategy({
         newUser.save()
                 .then(result =>{
                     console.log(result)
+                    req.flash("success", "you have successfully registered")
                     return done(null, newUser)
 
                 })

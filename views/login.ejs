@@ -16,6 +16,8 @@
 				<form class="login100-form validate-form" action="/login/Students" method="POST">
 
 					<span class="login100-form-title p-b-34"> Students Login </span>
+				
+					<span><%#=error%></span>
 
 					<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type user name">
 						<input id="first-name" class="input100" type="text" name="email" placeholder="Email">
@@ -49,6 +51,25 @@
 	</div>
 
 	<%#- include('../partials/dashboard-scripts') %>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script>
+		if( "<%-loginError%>" ){
+			swal({
+				text: "<%=loginError%>",
+			});
+		}
+		if( "<%-error%>" ){
+			swal({
+				text: "<%=error%>",
+			});
+		}
+		if("<%-passwordError%>"){
+			swal({
+				text: "<%-passwordError%>",
+			});
+		}
+	</script>
 
 </body>
 </html>
+
