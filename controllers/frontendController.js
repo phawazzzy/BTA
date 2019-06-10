@@ -1,8 +1,6 @@
 let code = require("../models/codes")
 let User = require("../models/user")
 
-    
-
 exports.homepage = (req, res, next)=>{
     User.find().then(result=>{
         
@@ -36,10 +34,7 @@ exports.postCode = async (req, res, next)=>{
     let DATA = {
         code: req.body.code
     }
-
     await code.create(DATA)
-    
-
     res.render("postcode", {})
 }
 
@@ -48,22 +43,28 @@ exports.register = (req, res, next)=>{
     res.render("register", {title: "register"})
 }
 
+exports.login = (req, res, next)=>{
+    res.render("login", {})
+}
+
 exports.profile = async(req, res, next)=>{
     // code to check the index for a particular document
     let log = req.user.email
     let result = await User.find()
     var allId = result.map(function(array){
-        // console.log(array)
         return array.email
     });
 
+    let Backnum = allId.indexOf(log)
     console.log(allId.indexOf(log))
 
     // code to check the index for a particular document ends here
 
-   
+    let name = req.user.firstName +  " " + req.user.lastName
+    let email = req.user.email
+    let phoneNO = req.user.phoneNo
+    let gender = req.user.gender
     let matricCode = req.user.matricNo
-
     let department = req.user.department
     let deptCode = ""
     let deptNum = ""
@@ -87,11 +88,6 @@ exports.profile = async(req, res, next)=>{
 
     }else{
         deptCode = ""
-    }
-
-  
-    // console.log(dd)
-
-    
-    res.render("profile", {title: "PROFILE", matricCode, deptCode, result, deptNum})
+    }    
+    res.render("profile", {title: "PROFILE", name, matricCode, gender, deptCode, phoneNO, email, department, result, deptNum, Backnum})
 }
