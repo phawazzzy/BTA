@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: Raleway;
+  background: grey;
+}
+
+.container {
+  width: 500px;
+  margin: 2% auto;
+  background: white;
+}
+
+.container header .header-text {
+  text-align: center;
+  background: dodgerblue;
+  color: white;
+  padding: 1em;
+}
+
+.container main {
+  padding: 2em;
+}
+
+.container main .profile-img {
+  width: 200px;
+  margin: 0 auto;
+  border-bottom: 4px solid grey;
+}
+
+.container main .profile-img img {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.container main .profile-details {
+  margin-top: 2em;
+  padding: 1em;
+}
+
+.container main .profile-details .detail-wrapper {
+  padding: 0.8em;
+  border-bottom: 0.2px solid grey;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.container main .logout-wrapper {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.container main .logout-wrapper button {
+  padding: 1.5em 10em;
+  background: dodgerblue;
+  border: none;
+  color: white;
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+  -webkit-transition: 0.2s ease-in;
+  transition: 0.2s ease-in;
+}
+
+.container main .logout-wrapper button:hover {
+  background: #0077ea;
+}
+/*# sourceMappingURL=style.css.map */

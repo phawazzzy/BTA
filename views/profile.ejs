@@ -1,131 +1,77 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><% title%></title>
-     <!-- <link rel="stylesheet" href="/public/stylesheets/profile.css">  -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+    <title>Profile</title>
+    <link rel="stylesheet" href="/stylesheets/profile.css">
 </head>
+
 <body>
-    
-
-<div class="container">
-      
-        <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-         <div class="header ">
-             <div class="row">
-             <div class="col-lg-4 col-md-4 col-md-12"> 
-             </div>
-
-             <div class="col-lg-4 col-md-4 col-md-12"> 
-                 <b>STUDENT PROFILE</b>
-             </div>
-
-             <div class="col-lg-4 col-md-4 col-md-12"> 
-             </div>
-         </div>
-    
+    <div class="container">
+        <header>
+        <div class="header-text">
+            <h1>STUDENTS PROFILE</h1>
         </div>
+    </header>
+
+    <main>
+        <div class="profile-img">
+            <img src="http://studentservices.lasu.edu.ng/returningstudents/images/stud_image/170591087.jpg" alt="Profile-Image">
         </div>
-         </div>
 
-         <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-         <div class="image">
-             <div class="row">
-             <div class="col-lg-4 col-md-4 col-md-12"> 
-             </div>
-
-             <div class="col-lg-4 col-md-4 col-md-12"> 
-             </div>
-
-             <div class="col-lg-4 col-md-4 col-md-12"> 
-                 <img src="http://www.studentservices.lasu.edu.ng/returningstudents/images/stud_image/170115015.jpg" class="rounded imag" alt="img" height="150px" width="150px">
-                
-                </div>
-         </div>
-    
-        </div>
-        </div>
-         </div>
-
-
-          <div class=" col-md-9 col-lg-9 col-sm-9 "> 
-                  <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>Name:</td>
-                        <td><%#=name%></td>
-                      </tr>
-                      <tr>
-                        <td>Matric Number:</td>
-                        <td><%#=matricNo%></td>
-                      </tr>
-                        <tr>
-                        <td>Department:</td>
-                        <td><%#=department%></td>
-                      </tr>
-                      <tr>
-                          <td>reg num</td>
-                          <td><%= "BTA/" + matricCode.slice(0, 2) + deptCode + "/" + deptNum %></td>
-                      </tr>
-
-                      <tr>
-                        <td>Date of Birth</td>
-                        <td>01/24/1988</td>
-                      </tr>
-                   
-                         <tr>
-                             <tr>
-                        <td>Gender</td>
-                        <td>Male</td>
-                      </tr>
-                        <tr>
-                        <td>Home Address</td>
-                        <td>No 2, Okesola Close, Ifako, Lagos</td>
-                      </tr>
-                      
-                      <tr>
-                        <td>Year of Entry:</td>
-                        <td>2014</td>
-                      </tr>
-
-                      <tr>
-                        <td>Email</td>
-                        <td><a href="mailto:i@support.com"><%#= email%></a></td>
-                      </tr>
-                        <td>Phone Number</td>
-                        <td>08167526178
-                        </td>
-                           
-                      </tr>
-                     
-                    </tbody>
-                  </table>
-                  
-                
-                  <a href="/students" class="btn btn-primary"><%#=button%></a>
-              
-                  <a href="/logout">logout</a>
-                </div>
-              </div>
+        <div class="profile-details">
+            <!-- Full name -->
+            <div class="detail-wrapper">
+                <label for="Fullname">Full Name :</label>
+                <h4>Ifeanyi Kelvin Ossai</h4>
             </div>
 
-            <%# for(let i= 0; i < result.length; i++){ %>
-             <%# console.log(result[1]) %>
-            <%# } %>
-    
+            <!-- Matric Number -->
+            <div class="detail-wrapper">
+                <label for="Matric-no">Matriculation Number :</label>
+                <h4>170591085</h4>
+            </div>
 
+            <!-- Department -->
+            <div class="detail-wrapper">
+                <label for="Department">Department:</label>
+                <h4>Computer Science</h4>
+            </div>
+
+            <!-- Registration Number -->
+            <div class="detail-wrapper">
+                <label for="Registration-no">Registration Number:</label>
+                <h4>BTA/17CS/4013</h4>
+            </div>
+
+            <!-- Gender-->
+            <div class="detail-wrapper">
+                <label for="Gender">Gender :</label>
+                <h4>Male</h4>
+            </div>
+
+            <!-- Email -->
+            <div class="detail-wrapper">
+                <label for="Email">Email Address</label>
+                <h4>ifeanyiko4u@gmail.com</h4>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="detail-wrapper">
+                <label for="Phone">Phone Number:</label>
+                <h4>07062581696</h4>
+            </div>
+        </div>
+        <!-- Logout Button -->
+        <div class="logout-wrapper">
+           <a href=""><button class="btn-logout">Log Out</button> </a> 
+        </div>
+    </main>
+</div>
 
 </body>
+
 </html>
