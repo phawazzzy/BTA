@@ -15,7 +15,7 @@ var passport = require('passport');
 
 var db_uri = 'mongodb://localhost:27017/BTA';
 
-// mongoose.connect(db_uri, { useNewUrlParser: true, useCreateIndex: true }).then(console.log("database connected")).catch(err => console.log(err));srs
+mongoose.connect(db_uri, { useNewUrlParser: true, useCreateIndex: true }).then(console.log("database connected")).catch(err => console.log(err));
 
 
 // autoIncrement.initialize(connection);
