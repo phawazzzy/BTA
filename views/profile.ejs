@@ -50,7 +50,7 @@
              </div>
 
              <div class="col-lg-4 col-md-4 col-md-12"> 
-                 <img src="http://www.studentservices.lasu.edu.ng/returningstudents/images/stud_image/170115015.jpg" class="rounded imag" alt="img" height="150px" width="150px">
+                 <img src="http://www.studentservices.lasu.edu.ng/returningstudents/images/stud_image/<% matricCode %>.jpg" class="rounded image" alt="img" height="150px" width="150px">
                 
                 </div>
          </div>
@@ -65,48 +65,36 @@
                     <tbody>
                       <tr>
                         <td>Name:</td>
-                        <td><%#=name%></td>
+                        <td><%=name%></td>
                       </tr>
                       <tr>
                         <td>Matric Number:</td>
-                        <td><%#=matricNo%></td>
+                        <td><%=matricCode%></td>
                       </tr>
                         <tr>
                         <td>Department:</td>
-                        <td><%#=department%></td>
+                        <td><%=department%></td>
                       </tr>
                       <tr>
                           <td>reg num</td>
-                          <td><%= "BTA/" + matricCode.slice(0, 2) + deptCode + "/" + deptNum %></td>
+                          <td><%= "BTA/" + matricCode.slice(0, 2) + deptCode + "/" + deptNum + Backnum %></td>
                       </tr>
 
-                      <tr>
-                        <td>Date of Birth</td>
-                        <td>01/24/1988</td>
-                      </tr>
+
                    
-                         <tr>
-                             <tr>
-                        <td>Gender</td>
-                        <td>Male</td>
-                      </tr>
-                        <tr>
-                        <td>Home Address</td>
-                        <td>No 2, Okesola Close, Ifako, Lagos</td>
-                      </tr>
-                      
                       <tr>
-                        <td>Year of Entry:</td>
-                        <td>2014</td>
+                        <td>Gender</td>
+                        <td><%=gender%></td>
                       </tr>
+                        
 
                       <tr>
                         <td>Email</td>
-                        <td><a href="mailto:i@support.com"><%#= email%></a></td>
+                        <td><a href="mailto:i@support.com"><%= email%></a></td>
                       </tr>
+                      <tr>
                         <td>Phone Number</td>
-                        <td>08167526178
-                        </td>
+                        <td><%= phoneNO %></td>
                            
                       </tr>
                      
