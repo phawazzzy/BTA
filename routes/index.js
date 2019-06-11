@@ -15,14 +15,34 @@ router.post("/ValCode", controller.validateCode);
 router.get("/signup", controller.signup);
 
 router.get("/register", controller.register);
-router.get("/profile", controller.profile)
+router.get("/login", controller.login)
+router.get("/profile", isLoggedIn, controller.profile)
 
 router.post('/register/students', passport.authenticate('local.register', {
-    successRedirect: "/",
-    failureRedirect: "/signup",
+    successRedirect: "/profile",
+    failureRedirect: "/register",
     failueFlash: true
 }));
 
+router.post('/login/Students', passport.authenticate('local.login', {
+    successRedirect: "/profile",
+    failureRedirect: "/login",
+    failueFlash: true
+}));
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    } else{
+    req.flash("PleaseLogin", "Please login to continue")
+    res.redirect("/login");
+    }
+}
+
+router.get("/logout", function(req, res) {
+    req.logout()
+    res.redirect("/login")
+})
 
 
 module.exports = router;
