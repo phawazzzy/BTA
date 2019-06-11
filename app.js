@@ -7,6 +7,10 @@ const mongoose = require("mongoose");
 const flash = require('express-flash');
 const session = require('express-session');
 var MongoStore = require('connect-mongodb-session')(session);
+var passport = require('passport');
+// autoIncrement = require('mongoose-auto-increment');
+
+
 
 
 var db_uri = 'mongodb://localhost:27017/BTA';
@@ -14,9 +18,15 @@ var db_uri = 'mongodb://localhost:27017/BTA';
 mongoose.connect(db_uri, { useNewUrlParser: true, useCreateIndex: true }).then(console.log("database connected")).catch(err => console.log(err));
 
 
+// autoIncrement.initialize(connection);
+
+ 
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+require("./config/passport");
+
 
 var app = express();
 
@@ -37,8 +47,13 @@ app.use(session({
 }));
 
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -2,6 +2,8 @@ var passport = require('passport');
 var localStrategy = require('passport-local').Strategy
 var User = require('../models/user');
 
+
+
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
@@ -12,7 +14,7 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-passport.use('local.signup', new localStrategy({
+passport.use('local.register', new localStrategy({
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
@@ -30,22 +32,37 @@ passport.use('local.signup', new localStrategy({
         }
 
         let newUser = new User();
+        // user2 = newUser
         newUser.firstName = req.body.firstName;
         newUser.lastName = req.body.lastName;
         newUser.matricNo = req.body.matricNo;
+        newUser.department = req.body.department;
         newUser.cgpa = req.body.cgpa;
         newUser.gender = req.body.gender;
         newUser.phoneNo = req.body.phoneNo;
         newUser.email = req.body.email;
+        // newUser.index = user2
+        
         newUser.password = newUser.hashPassword(req.body.password);
 
-        newUser.save(function(err) {
-            if (err) {
-                return done(err);
-            }
 
-            return done(null, newUser);
-        })
+        newUser.save()
+                .then(result =>{
+                    console.log(result)
+                    return done(null, newUser)
+
+                })
+                .catch(err =>{
+                    return done(err)
+                })
+
+        // newUser.save(function(err) {
+        //     if (err) {
+        //         return done(err);
+        //     }
+
+        //     return done(null, newUser);
+        // })
 
     })
 }))

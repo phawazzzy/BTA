@@ -18,7 +18,7 @@
 <body class="bg-white">
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">BSH</a>
+        <a class="navbar-brand" href="#">BTA</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -42,48 +42,65 @@
     <div id="main">
         <div class="col-md-5 mx-auto col-sm-8 hide-sm m-5">
             <div class="rounded bg-light">
-                <form class="text-center p-5">
+                <form class="text-center p-5" action="/register/students" method="POST">
                     <div class="form-row mb-4">
                         <div class="col">
                             <!-- First name -->
-                            <input type="text" id="defaultRegisterFormFirstName" class="form-control"
-                                placeholder="First name">
+                            <input type="text" id="defaultRegisterFormFirstName" class="form-control" name="firstName" placeholder="First name" required>
                         </div>
                         <div class="col">
                             <!-- Last name -->
-                            <input type="text" id="defaultRegisterFormLastName" class="form-control"
-                                placeholder="Last name">
+                            <input type="text" id="defaultRegisterFormLastName" class="form-control" name="lastName" placeholder="Last name" required>
                         </div>
                     </div>
                     <!-- Email -->
-                    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+                    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4"
+                     name="email"   placeholder="E-mail" required>
 
                     <!-- Phone No -->
-                    <input type="phone" id="phoneNum" class="form-control mb-4" placeholder="Phone Number">
+                    <input type="phone" id="phoneNum" class="form-control mb-4" name="phoneNo" placeholder="Phone Number" required>
 
                     <!-- Matric No -->
-                    <input type="number" id="matricNum" class="form-control mb-4" placeholder="Matric Number">
+                    <input type="number" id="matricNum" class="form-control mb-4" name="matricNo" placeholder="Matric Number" required>
 
+                    <!-- department -->
+                    <!-- <input type="text" id="department" class="form-control mb-4" name="department" placeholder="department"> -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" for="inputGroupSelect01">Department</label>
+                        </div>
+                        <select name="department" class="custom-select" id="inputGroupSelect01" required>
+                          <option selected>Choose...</option>
+                          <option  value="chemistry">chemistry</option>
+                          <option  value="computer science">computer science</option>
+                          <option  value="computer science education">computer science education</option>
+                          <option  value="mathematics">Mathematics</option>
+                          <option  value="physics">physics</option>
+                        </select>
+                      </div>
+                      
+
+                    
                     <!-- CGPA -->
-                    <input type="number" id="cgpa" class="form-control mb-4" placeholder="Current CGPA">
+                    <input type="text" id="cgpa" class="form-control mb-4" name="cgpa" placeholder="Current CGPA" required>
 
                     <!-- Gender -->
                     <div class="form-row mb-4">
                         <div class="col">
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="male" name="Gender" class="custom-control-input">
+                                <input type="radio" id="male" name="Gender" class="custom-control-input" required>
                                 <label class="custom-control-label" for="male">Male</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="female" name="Gender" class="custom-control-input">
+                                <input type="radio" id="female" name="Gender" class="custom-control-input" >
                                 <label class="custom-control-label" for="female">female</label>
                             </div>
                         </div>
                     </div>
                     <!-- Password -->
-                    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4"
+                    <input type="password" id="defaultLoginFormPassword" name="password" class="form-control mb-4"
                         placeholder="Password">
 
 
@@ -96,9 +113,13 @@
     <!-- Footer -->
     <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
         <div class="container text-center">
-            <small>Copyright &copy; BCH</small>
+            <small>Copyright &copy; BTA</small>
         </div>
     </footer>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </html>
