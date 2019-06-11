@@ -14,8 +14,6 @@ router.post("/check", controller.postCode);
 router.post("/ValCode", controller.validateCode);
 router.get("/signup", controller.signup);
 
-<<<<<<< HEAD
-=======
 router.get("/register", controller.register);
 router.get("/profile", controller.profile)
 
@@ -26,7 +24,6 @@ router.post('/register/students', passport.authenticate('local.register', {
 }));
 
 
->>>>>>> 320ce92526bf420cafe4fbfaa02a01c3898aa3eb
 
 module.exports = router;
 
