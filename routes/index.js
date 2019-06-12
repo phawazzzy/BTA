@@ -12,7 +12,10 @@ router.get("/", controller.homepage);
 router.get("/postcode", controller.code);
 router.post("/check", controller.postCode);
 router.post("/ValCode", controller.validateCode);
-router.get("/signup", controller.signup);
+router.get("/signup", controller.signup); 
+
+
+router.post('/qrcode', controller.qrcode);
 
 router.get("/register", controller.register);
 router.get("/login", controller.login)

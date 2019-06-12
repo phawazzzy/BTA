@@ -1,5 +1,7 @@
 let code = require("../models/codes")
 let User = require("../models/user")
+const qr = require('qr-image');
+const fs = require('fs');
 
 exports.homepage = (req, res, next)=>{
     User.find().then(result=>{
@@ -96,3 +98,28 @@ exports.profile = async(req, res, next)=>{
     }    
     res.render("profile", {title: "PROFILE", name, matricCode, gender, deptCode, phoneNO, email, department, result, deptNum, Backnum})
 }
+
+exports.qrcode = (req, res, next) => {
+    // Get the text to generate QR code
+    let qr_txt = req.body.qr_text;
+    
+    // Generate QR Code from text
+    var qr_png = qr.imageSync(qr_txt,{ type: 'png'})
+    console.log("generated code")
+    // Generate a random file name 
+    let qr_code_file_name = new Date().getTime() + '.png';
+  
+    fs.writeFileSync('./public/qr/' + qr_code_file_name, qr_png, (err) => {
+        if(err){
+            console.log("err");
+        }
+        
+    })
+  
+    // Send the link of generated QR code
+    res.send({
+        'qr_img': "qr/" + qr_code_file_name
+    });
+  
+  };
+  

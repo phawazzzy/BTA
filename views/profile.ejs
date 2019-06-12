@@ -2,76 +2,119 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profile</title>
-    <link rel="stylesheet" href="/stylesheets/profile.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Profile</title>
+  <link rel="stylesheet" href="/stylesheets/profile.css">
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container">
-        <header>
-        <div class="header-text">
-            <h1>STUDENTS PROFILE</h1>
-        </div>
+  <%- include('partials/header.ejs') %>
+
+  <div class="mycontainer rounded">
+    <header>
+      <div class="header-text p-2">
+        <h1>STUDENTS PROFILE</h1>
+      </div>
     </header>
 
     <main>
-        <div class="profile-img">
-            <img src="http://studentservices.lasu.edu.ng/returningstudents/images/stud_image/<%- matricCode %>.jpg" alt="Profile-Image">
+      <div class="profile-head">
+        <div id="profile_pic" style="height: 150px">
+          <img src="http://studentservices.lasu.edu.ng/returningstudents/images/stud_image/170115015.jpg"
+            alt="Profile-Image">
+        </div>
+        <!-- Qr-code -->
+        <div id="profile_qr-code" style="height: 150px;">
+          <img src="" alt="qr-code" id="qr-code-img">
+        </div>
+      </div>
+
+      <div class="profile-details">
+        <!-- Full name -->
+        <div class="detail-wrapper">
+          <label for="Fullname">Full Name :</label>
+          <h5><%- name %></h5>
         </div>
 
-        <div class="profile-details">
-            <!-- Full name -->
-            <div class="detail-wrapper">
-                <label for="Fullname">Full Name :</label>
-                <h4><%- name %></h4>
-            </div>
-
-            <!-- Matric Number -->
-            <div class="detail-wrapper">
-                <label for="Matric-no">Matriculation Number :</label>
-                <h4><%- matricCode %></h4>
-            </div>
-
-            <!-- Department -->
-            <div class="detail-wrapper">
-                <label for="Department">Department:</label>
-                <h4><%- department %> </h4>
-            </div>
-
-            <!-- Registration Number -->
-            <div class="detail-wrapper">
-                <label for="Registration-no">Registration Number:</label>
-                <h4><%= "BTA/" + matricCode.slice(0, 2) + deptCode + "/" + deptNum + Backnum %></h4>
-            </div>
-
-            <!-- Gender-->
-            <div class="detail-wrapper">
-                <label for="Gender">Gender :</label>
-                <h4><%- gender %></h4>
-            </div>
-
-            <!-- Email -->
-            <div class="detail-wrapper">
-                <label for="Email">Email Address</label>
-                <h4><%- email %> </h4>
-            </div>
-
-            <!-- Phone Number -->
-            <div class="detail-wrapper">
-                <label for="Phone">Phone Number:</label>
-                <h4><%- phoneNO %></h4>
-            </div>
+        <!-- Matric Number -->
+        <div class="detail-wrapper">
+          <label for="Matric-no">Matriculation Number :</label>
+          <h5><%- matricCode %></h5>
         </div>
-        <!-- Logout Button -->
-        <div class="logout-wrapper">
-           <a href="/logout"><button class="btn-logout">Log Out</button> </a> 
+
+        <!-- Department -->
+        <div class="detail-wrapper">
+          <label for="Department">Department:</label>
+          <h5><%- department %> </h5>
         </div>
+
+        <!-- Registration Number -->
+        <div class="detail-wrapper">
+          <label for="Registration-no">Registration Number:</label>
+          <h5 id="gentext"><%= "BTA/" + matricCode.slice(0, 2) + deptCode + "/" + deptNum + Backnum %></h5>
+        </div>
+
+        <!-- Gender-->
+        <div class="detail-wrapper">
+          <label for="Gender">Gender :</label>
+          <h5><%- gender %></h5>
+        </div>
+
+        <!-- Email -->
+        <div class="detail-wrapper">
+          <label for="Email">Email Address</label>
+          <h5><%- email %> </h5>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="detail-wrapper">
+          <label for="Phone">Phone Number:</label>
+          <h5><%- phoneNO %></h5>
+        </div>
+
+        <div class="detail-wrapper">
+          <a id="qr-download" href="" download>Download Qr-code <i class="fa fa-download" aria-hidden="true"></i> </a>
+        </div>
+      </div>
+      <!-- Logout Button -->
+      <div class="logout-wrapper">
+        <a href="/logout"><button class="btn-logout">Log Out</button> </a>
+      </div>
     </main>
-</div>
+  </div>
+  <%- include("./partials/footer.ejs") %>
+  
+  <script>
+    // Get the text from input
+    let txt = document.querySelector('#gentext').innerHTML;
 
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText.qr_img);
+        let res = JSON.parse(this.responseText);
+        let img = document.querySelector('#qr-code-img');
+        let d_link = document.querySelector('#qr-download');
+        console.log("here")
+
+        // Set img source
+        img.src = res.qr_img;
+
+        // set download Link
+        d_link.href = res.qr_img
+
+        // Show the image
+        img.classList.remove('d-none');
+
+      }
+    };
+    xhttp.open("POST", "/qrcode", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("qr_text=" + txt);
+  </script>
 </body>
 
 </html>

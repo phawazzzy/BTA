@@ -10,13 +10,17 @@ var MongoStore = require('connect-mongodb-session')(session);
 var passport = require('passport');
 const dotenv = require('dotenv');
 
+let User = require("./models/user")
+const qr = require('qr-image');
+const fs = require('fs');
+
 // autoIncrement = require('mongoose-auto-increment');
 
 
 dotenv.config();
 
 
-var db_uri = process.env.DB_URI ;
+var db_uri = process.env.DB_URI;
 
 mongoose.connect(db_uri, { useNewUrlParser: true, useCreateIndex: true }).then(console.log("database connected")).catch(err => console.log(err));
 
