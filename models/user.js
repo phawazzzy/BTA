@@ -14,6 +14,7 @@ let userSchema = new Schema({
     email: String,
     password: String,
     index: Number,
+    regNO: String,
 })
 
 // userSchema.plugin(autoIncrement.plugin, 'user');

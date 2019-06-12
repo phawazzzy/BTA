@@ -21,14 +21,21 @@ router.get("/profile", isLoggedIn, controller.profile)
 router.post('/register/students', passport.authenticate('local.register', {
     successRedirect: "/profile",
     failureRedirect: "/register",
-    failueFlash: true
+    failureFlash: true
 }));
 
 router.post('/login/Students', passport.authenticate('local.login', {
     successRedirect: "/profile",
     failureRedirect: "/login",
-    failueFlash: true
+    failureFlash: true
 }));
+
+// router.post('/checkCode', passport.authenticate('local.registerCode', {
+//     // successMessage: true,
+//     successRedirect: "/login",
+//     failureRedirect: "/",
+//     failureFlash: true
+// }))
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

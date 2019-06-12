@@ -1,11 +1,11 @@
 let code = require("../models/codes")
 let User = require("../models/user")
+const url = require('url');
 
 exports.homepage = (req, res, next)=>{
-    User.find().then(result=>{
-        
-    }) 
-    res.render("index", {title: "HOME"})
+    let usedCode = req.flash("usedCode")
+    let inexistence = req.flash("inexistence")
+    res.render("index", {title: "HOME", inexistence, usedCode})
 };
 
 exports.signup = (req, res, next)=>{
@@ -15,22 +15,34 @@ exports.signup = (req, res, next)=>{
 exports.validateCode = async(req, res, next)=>{
     userCode = req.body.code;
     let codes =  await code.findOne({code:userCode})
-    if (codes 
-        // && codes.isRegistered == true
-        ){
+   
+     if (codes && codes.isRegistered == false){
         console.log(userCode)
-        res.redirect("/register")
-    } else{
-    res.redirect("/")
-    }
+        code.findOneAndUpdate({code: userCode}, {isRegistered: true}, {upsert: true})
+        .catch((err)=>{console.log(err)})
+        .then(()=>{
+            req.flash("mustUse", `${userCode} code has been registered make sure you complete your registration 
+            immediately otherwise you will lose the validaty of the code thanks`)
+            res.redirect("/register".split("?").shift())
+
+        })
+    } else if(codes && codes.isRegistered == true){
+        req.flash("usedCode", `the code ${userCode} has been used, Try to login if you have an account`)
+       res.redirect("/")
+   } else{
+       req.flash("inexistence", `the code ${userCode} doesn't exist`)
+       res.redirect("/")
+   }
 }
 
 exports.code =(req, res, next) =>{
-    res.render("postcode")
+    let codeExist = req.flash("codeExist")
+
+    res.render("postcode", {codeExist})
 }
 
 
-exports.postCode = async (req, res, next)=>{
+exports.postCode =  async(req, res, next)=>{
     let DATA = {
         code: req.body.code
     }
@@ -41,8 +53,14 @@ exports.postCode = async (req, res, next)=>{
 
 exports.register = (req, res, next)=>{
     let success = req.flash("success")
-
-    res.render("register", {title: "register", success})
+    let mustUse =req.flash("mustUse")
+    // let cancel = req.path
+    // const myURL = new URL(`${req.protocol}://${req.hostname}:3000${req.originalUrl}`)
+    // console.log(myURL)
+    // myURL.pathname = "/change"
+    // console.log(myURL.href)
+    console.log(url.resolve(`${req.protocol}://${req.hostname}:3000${req.originalUrl}`, "change"))
+    res.render("register".split("_", 3).shift(), {title: "register", mustUse, success})
 }
 
 exports.login = (req, res, next)=>{
@@ -96,3 +114,21 @@ exports.profile = async(req, res, next)=>{
     }    
     res.render("profile", {title: "PROFILE", name, matricCode, gender, deptCode, phoneNO, email, department, result, deptNum, Backnum})
 }
+
+// function validateCode(){
+//      userCode = req.body.code;
+//     let codes =  await code.findOne({code:userCode})
+//     if (codes && codes.isRegistered == true
+//         ){
+//         console.log(userCode)
+//         res.redirect("/register")
+//     } else{
+       
+//         code.findOneAndUpdate({code: userCode}, {isRegistered: true}, {upsert: true})
+//             .catch((err)=>{console.log(err)})
+//             .then(()=>{
+//                 req.flash("must use", "this code has been registered make sure you complete your registration immediately otherwise you will lose the validaty of the code thanks")
+//                 res.redirect("/register")
+//             })
+//     }
+// }

@@ -24,7 +24,7 @@
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact </a>
+            <a class="nav-link" href="/login">LOG IN </a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -43,6 +43,11 @@
           </div>
 
           <div class="col-md-4 col-sm-12">
+            <%=usedCode%>
+            <%=inexistence%>
+
+          
+
             <form action="/valCode" method="POST">
               <div class="form-group">
                 <label class="font-weight-bold" for="pin">Enter Generated pin to proceed to your registration</label>
@@ -74,4 +79,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+  <script>
+    if("<%-usedCode%>"){
+     swal({
+       text: "<%=usedCode%>"
+     }) 
+    }
+    
+  </script>
 </html>
