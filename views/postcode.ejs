@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <%= codeExist %>
+    <%#= pinposted %>
     <form action="/check" method="post">
         <input type="text" name="code">
         <input type="submit" value="SUBMIT">
@@ -16,7 +16,13 @@
 
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <script>
+        if("<%-pinposted%>"){
+            swal({
+                text: "<%=pinposted%>"
+            })
+        }
+    </script>
    
 
 </body>

@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-// var localStrategy = require('passport-local').Strategy
 const controller = require("../controllers/frontendController");
-// let code = require("../models/codes")
 let user = require("../models/user")
 
 
@@ -14,7 +12,7 @@ router.post("/check", controller.postCode);
 router.post("/ValCode", controller.validateCode);
 router.get("/signup", controller.signup);
 
-router.get("/register", controller.register);
+router.get("/register/:userCode", controller.register);
 router.get("/login", controller.login)
 router.get("/profile", isLoggedIn, controller.profile)
 
@@ -30,12 +28,7 @@ router.post('/login/Students', passport.authenticate('local.login', {
     failureFlash: true
 }));
 
-// router.post('/checkCode', passport.authenticate('local.registerCode', {
-//     // successMessage: true,
-//     successRedirect: "/login",
-//     failureRedirect: "/",
-//     failureFlash: true
-// }))
+
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

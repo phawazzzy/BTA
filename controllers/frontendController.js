@@ -18,14 +18,10 @@ exports.validateCode = async(req, res, next)=>{
    
      if (codes && codes.isRegistered == false){
         console.log(userCode)
-        code.findOneAndUpdate({code: userCode}, {isRegistered: true}, {upsert: true})
-        .catch((err)=>{console.log(err)})
-        .then(()=>{
-            req.flash("mustUse", `${userCode} code has been registered make sure you complete your registration 
-            immediately otherwise you will lose the validaty of the code thanks`)
-            res.redirect("/register".split("?").shift())
-
-        })
+        
+        // req.flash("mustUse", `${userCode} code has been registered make sure you complete your registration 
+        // immediately otherwise you will lose the validaty of the code thanks`)
+        res.redirect(`/register/${userCode}`)
     } else if(codes && codes.isRegistered == true){
         req.flash("usedCode", `the code ${userCode} has been used, Try to login if you have an account`)
        res.redirect("/")
@@ -36,31 +32,42 @@ exports.validateCode = async(req, res, next)=>{
 }
 
 exports.code =(req, res, next) =>{
-    let codeExist = req.flash("codeExist")
+    let pinposted = req.flash("pinposted")
 
-    res.render("postcode", {codeExist})
+    res.render("postcode", {pinposted})
 }
 
 
 exports.postCode =  async(req, res, next)=>{
-    let DATA = {
+ let DATA = {
         code: req.body.code
     }
-    await code.create(DATA)
-    res.render("postcode", {})
+     code.create(DATA).then(result=>{
+       req.flash("pinposted", `the pin has been succefully added to the DB`)
+
+         console.log("success")
+        res.redirect("/postcode", )
+
+     }).catch(err=>{
+         
+         console.log(err)
+     })
 }
 
 
-exports.register = (req, res, next)=>{
+exports.register = async (req, res, next)=>{
     let success = req.flash("success")
     let mustUse =req.flash("mustUse")
-    // let cancel = req.path
-    // const myURL = new URL(`${req.protocol}://${req.hostname}:3000${req.originalUrl}`)
-    // console.log(myURL)
-    // myURL.pathname = "/change"
-    // console.log(myURL.href)
-    console.log(url.resolve(`${req.protocol}://${req.hostname}:3000${req.originalUrl}`, "change"))
-    res.render("register".split("_", 3).shift(), {title: "register", mustUse, success})
+    let codegagan = req.params.userCode;
+    let page = await code.findOne({code: codegagan, isRegistered: false})
+    console.log(page)
+
+    if (page){
+    res.render("register", {title: "register", codegagan, mustUse, success})            
+    } else {
+        res.send('ole ni e oobii')
+    }
+    
 }
 
 exports.login = (req, res, next)=>{
@@ -115,20 +122,3 @@ exports.profile = async(req, res, next)=>{
     res.render("profile", {title: "PROFILE", name, matricCode, gender, deptCode, phoneNO, email, department, result, deptNum, Backnum})
 }
 
-// function validateCode(){
-//      userCode = req.body.code;
-//     let codes =  await code.findOne({code:userCode})
-//     if (codes && codes.isRegistered == true
-//         ){
-//         console.log(userCode)
-//         res.redirect("/register")
-//     } else{
-       
-//         code.findOneAndUpdate({code: userCode}, {isRegistered: true}, {upsert: true})
-//             .catch((err)=>{console.log(err)})
-//             .then(()=>{
-//                 req.flash("must use", "this code has been registered make sure you complete your registration immediately otherwise you will lose the validaty of the code thanks")
-//                 res.redirect("/register")
-//             })
-//     }
-// }

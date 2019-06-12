@@ -1,6 +1,7 @@
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy
 var User = require('../models/user');
+
 const Code = require("../models/codes");
 
 
@@ -23,9 +24,12 @@ passport.use('local.register', new localStrategy({
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
-}, function(req, email, password, done) {
+}, async function(req, email, password, done) {
 
-    User.findOne({ 'email': email }, function(err, user) {
+    await Code.findOneAndUpdate({code: req.body.codegagan}, {isRegistered: true}, {upsert: true})
+        .catch((err)=>{console.log(err)})
+        
+    await User.findOne({ 'email': email }, function(err, user) {
         if (err) {
             return done(err);
         }
@@ -46,8 +50,7 @@ passport.use('local.register', new localStrategy({
         newUser.gender = req.body.Gender;
         newUser.phoneNo = req.body.phoneNo;
         newUser.email = req.body.email;
-        newUser.regNo = `BTA/  ${matricCode.slice(0, 2)}  ${deptCode} /  ${deptNum}  ${Backnum}`
-        // newUser.index = user2
+        
         
         newUser.password = newUser.hashPassword(req.body.password);
 
