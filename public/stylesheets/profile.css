@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Raleway;
+  background: url("../images/memphis-mini.png");
+}
+
+.mycontainer {
+  width: 600px;
+  margin: 2% auto;
+  background: white;
+}
+
+.mycontainer header .header-text {
+  text-align: center;
+  background: dodgerblue;
+  color: white;
+  /* padding: 1em; */
+}
+
+.mycontainer main {
+  padding: 2em;
+}
+
+.mycontainer main .profile-head {
+  width: 300px;
+  display: flex;
+  /* align-content: center; */
+  margin: 0 auto;
+  justify-content: center;
+  border-bottom: 4px solid grey;
+}
+
+#profile_pic {
+  padding: 30px 10px 0px 0px;
+}
+
+#profile_qr-code {
+}
+
+.mycontainer main .profile-head img {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.mycontainer main .profile-details {
+  margin-top: 2em;
+  padding: 1em;
+}
+
+.mycontainer main .profile-details .detail-wrapper {
+  padding: 0.8em;
+  border-bottom: 0.2px solid grey;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.mycontainer main .logout-wrapper {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.mycontainer main .logout-wrapper button {
+  padding: 1.5em 10em;
+  background: dodgerblue;
+  border: none;
+  color: white;
+  -webkit-transform: scale(0.9);
+  transform: scale(0.9);
+  -webkit-transition: 0.2s ease-in;
+  transition: 0.2s ease-in;
+}
+
+.mycontainer main .logout-wrapper button:hover {
+  background: #0077ea;
+}
+/*# sourceMappingURL=style.css.map */

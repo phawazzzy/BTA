@@ -1,7 +1,7 @@
 let code = require("../models/codes")
 let User = require("../models/user")
-
-    
+const qr = require('qr-image');
+const fs = require('fs');
 
 exports.homepage = (req, res, next)=>{
     User.find().then(result=>{
@@ -36,16 +36,22 @@ exports.postCode = async (req, res, next)=>{
     let DATA = {
         code: req.body.code
     }
-
     await code.create(DATA)
-    
-
     res.render("postcode", {})
 }
 
 
 exports.register = (req, res, next)=>{
-    res.render("register", {title: "register"})
+    let success = req.flash("success")
+
+    res.render("register", {title: "register", success})
+}
+
+exports.login = (req, res, next)=>{
+    let loginError = req.flash("loginError")
+    let error = req.flash('PleaseLogin')
+    let passwordError = req.flash('passwordError')
+    res.render("login", {error, loginError, passwordError})
 }
 
 exports.profile = async(req, res, next)=>{
@@ -53,17 +59,19 @@ exports.profile = async(req, res, next)=>{
     let log = req.user.email
     let result = await User.find()
     var allId = result.map(function(array){
-        // console.log(array)
         return array.email
     });
 
+    let Backnum = allId.indexOf(log)
     console.log(allId.indexOf(log))
 
     // code to check the index for a particular document ends here
 
-   
+    let name = req.user.firstName +  " " + req.user.lastName
+    let email = req.user.email
+    let phoneNO = req.user.phoneNo
+    let gender = req.user.gender
     let matricCode = req.user.matricNo
-
     let department = req.user.department
     let deptCode = ""
     let deptNum = ""
@@ -87,11 +95,31 @@ exports.profile = async(req, res, next)=>{
 
     }else{
         deptCode = ""
-    }
-
-  
-    // console.log(dd)
-
-    
-    res.render("profile", {title: "PROFILE", matricCode, deptCode, result, deptNum})
+    }    
+    res.render("profile", {title: "PROFILE", name, matricCode, gender, deptCode, phoneNO, email, department, result, deptNum, Backnum})
 }
+
+exports.qrcode = (req, res, next) => {
+    // Get the text to generate QR code
+    let qr_txt = req.body.qr_text;
+    
+    // Generate QR Code from text
+    var qr_png = qr.imageSync(qr_txt,{ type: 'png'})
+    console.log("generated code")
+    // Generate a random file name 
+    let qr_code_file_name = new Date().getTime() + '.png';
+  
+    fs.writeFileSync('./public/qr/' + qr_code_file_name, qr_png, (err) => {
+        if(err){
+            console.log("err");
+        }
+        
+    })
+  
+    // Send the link of generated QR code
+    res.send({
+        'qr_img': "qr/" + qr_code_file_name
+    });
+  
+  };
+  
