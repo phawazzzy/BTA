@@ -54,8 +54,8 @@
       <div class="text-center">
         <h1 class="mb-1 text-white" id="headtext">BASIC TUTOR <br> ACADEMY</h1>
       </div>
-      <%=usedCode%>
-      <%=inexistence%>
+      <%#=usedCode%>
+      <%#=inexistence%>
       <form action="/valCode" method="post">
       <div id="searchbox" class="mt-4">
         <input type="password" class="form-control p-4" id="pin" name="code"
@@ -92,6 +92,7 @@
       <p class="text-black-50 font-italic small mb-0 font-weight-bold">Copyright &copy; Basic Tutor Academy 2019</p>
     </div>
   </footer>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -102,15 +103,24 @@
 
   <!-- Custom scripts for this template -->
   <script src="js/stylish-portfolio.min.js"></script>
-
-</body>
+  <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 
   <script>
-    if("<%-usedCode%>"){
-     swal({
-       text: "<%=usedCode%>"
-     }) 
-    }
-    
+      if("<%-usedCode%>"){
+          swal({
+              text: "<%=usedCode%>"
+          })
+      }
+
+      if("<%-inexistence%>"){
+          swal({
+              text: "<%=inexistence%>"
+          })
+      }
   </script>
+</body>
+
+
+  
+
 </html>
