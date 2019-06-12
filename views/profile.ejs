@@ -54,7 +54,7 @@
         <!-- Registration Number -->
         <div class="detail-wrapper">
           <label for="Registration-no">Registration Number:</label>
-          <h5 id="gentext"><%= "BTA/" + matricCode.slice(0, 2) + deptCode + "/" + deptNum + Backnum %></h5>
+          <h5 id="gentext"><%= "BTA-" + matricCode.slice(0, 2) + deptCode + "-" + deptNum + Backnum %></h5>
         </div>
 
         <!-- Gender-->
@@ -86,7 +86,7 @@
     </main>
   </div>
   <%- include("./partials/footer.ejs") %>
-  
+
   <script>
     // Get the text from input
     let txt = document.querySelector('#gentext').innerHTML;
@@ -94,12 +94,10 @@
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText.qr_img);
         let res = JSON.parse(this.responseText);
         let img = document.querySelector('#qr-code-img');
         let d_link = document.querySelector('#qr-download');
-        console.log("here")
-
+        
         // Set img source
         img.src = res.qr_img;
 
