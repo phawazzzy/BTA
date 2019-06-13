@@ -35,8 +35,10 @@ exports.validateCode = async (req, res, next) => {
 
 exports.code =(req, res, next) =>{
     let pinposted = req.flash("pinposted")
+    let pinExist = req.flash("pinExist")
 
-    res.render("postcode", {pinposted})
+
+    res.render("postcode", {pinposted, pinExist})
 }
 
 
@@ -44,16 +46,27 @@ exports.postCode =  async(req, res, next)=>{
  let DATA = {
         code: req.body.code
     }
-     code.create(DATA).then(result=>{
-       req.flash("pinposted", `the pin has been succefully added to the DB`)
+  let check =  await code.findOne({code: req.body.code})
+        if (check){
+            req.flash("pinExist", `the pin wasn,t  added to the DB because it exist`)
 
-         console.log("success")
-        res.redirect("/postcode", )
+            console.log("code exist already")
+            res.redirect("/postcode", )
 
-     }).catch(err=>{
+        }else{
+            code.create(DATA).then(result=>{
+                req.flash("pinposted", `the pin has been succefully added to the DB`)
          
-         console.log(err)
-     })
+                  console.log("success")
+                 res.redirect("/postcode", )
+         
+              }) .catch(err=>{
+         
+                console.log(err)
+            })
+        }
+    
+    
 }
 
 
