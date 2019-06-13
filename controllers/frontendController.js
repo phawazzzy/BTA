@@ -23,10 +23,10 @@ exports.validateCode = async(req, res, next)=>{
         // immediately otherwise you will lose the validaty of the code thanks`)
         res.redirect(`/register/${userCode}`)
     } else if(codes && codes.isRegistered == true){
-        req.flash("usedCode", `the code "${userCode}" has been used, Try to login if you have an account`)
+        req.flash("usedCode", `the pin "${userCode}" has been used, Try to login if you have an account`)
        res.redirect("/")
    } else{
-       req.flash("inexistence", `the code "${userCode}" doesn't exist`)
+       req.flash("inexistence", `the pin "${userCode}" doesn't exist`)
        res.redirect("/")
    }
 }
