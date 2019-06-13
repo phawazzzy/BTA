@@ -7,6 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <link rel="icon" type="image/jpg" sizes="16x16" href="/images/BTA.jpg">
+
 
   <title>BTA</title>
 
@@ -14,10 +18,10 @@
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom Fonts -->
-  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
     rel="stylesheet" type="text/css">
-  <link href="../vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+  <link href="/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../stylesheets/style.css">
@@ -52,14 +56,17 @@
       <div class="text-center">
         <h1 class="mb-1 text-white" id="headtext">BASIC TUTOR <br> ACADEMY</h1>
       </div>
-     
+     <span class="text-white font-weight-bold" > <%=usedCode%> </span>
+     <span class="text-white font-weight-bold" > <%=inexistence%> </span>
+      <form action="/valCode" method="post">
       <div id="searchbox" class="mt-4">
         <input type="password" class="form-control p-4" id="pin" name="code"
           placeholder="Input your generated pin here">
         <div class="input-group-append" id="searchbox-icon">
-          <button class="btn bg-primary text-light" type="button" id="button-addon2">Go</button>
+          <button class="btn bg-primary text-light" type="submit" id="button-addon2">Go</button>
         </div>
       </div>
+    </form>
       <div class="overlay"></div>
   </header>
 
@@ -87,6 +94,7 @@
       <p class="text-black-50 font-italic small mb-0 font-weight-bold">Copyright &copy; Basic Tutor Academy 2019</p>
     </div>
   </footer>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -97,15 +105,24 @@
 
   <!-- Custom scripts for this template -->
   <script src="js/stylish-portfolio.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script>
-		if( "<%#-loginError%>" ){
-			swal({
-				text: "<%#=loginError%>",
-			});
-    }
-  </script>
+  <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 
+  <script>
+      if("<%-usedCode%>"){
+          swal({
+              text: "<%=usedCode%>"
+          })
+      }
+
+      if("<%-inexistence%>"){
+          swal({
+              text: "<%=inexistence%>"
+          })
+      }
+  </script>
 </body>
+
+
+  
 
 </html>

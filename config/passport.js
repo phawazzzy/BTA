@@ -2,11 +2,15 @@ var passport = require('passport');
 var localStrategy = require('passport-local').Strategy
 var User = require('../models/user');
 
+const Code = require("../models/codes");
+
 
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
+
+
 
 passport.deserializeUser(function(id, done) {
     User.findById(id, function(err, user) {
@@ -14,13 +18,18 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+
+
 passport.use('local.register', new localStrategy({
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
-}, function(req, email, password, done) {
+}, async function(req, email, password, done) {
 
-    User.findOne({ 'email': email }, function(err, user) {
+    await Code.findOneAndUpdate({code: req.body.codegagan}, {isRegistered: true}, {upsert: true})
+        .catch((err)=>{console.log(err)})
+        
+    await User.findOne({ 'email': email }, function(err, user) {
         if (err) {
             return done(err);
         }
@@ -41,7 +50,7 @@ passport.use('local.register', new localStrategy({
         newUser.gender = req.body.Gender;
         newUser.phoneNo = req.body.phoneNo;
         newUser.email = req.body.email;
-        // newUser.index = user2
+        newUser.code = req.body.codegagan;
         
         newUser.password = newUser.hashPassword(req.body.password);
 
@@ -92,3 +101,44 @@ passport.use('local.login', new localStrategy({
 
     })
 }))
+
+// code checking
+// passport.use('local.registerCode', new localStrategy({
+//     usernameField: 'code',
+//     passwordField: '',
+//     passReqToCallback: true
+// }, function(req, code, password, done) {
+
+//     Code.findOne({ 'code': code }, function(err, code) {
+//         if (err) {
+//             return done(err);
+//         }
+//         if (code) {
+//             req.flash('codeExist', "code already Exist in the database ")
+
+//             return done(null, false);
+
+//         }
+
+//         let newCode = new Code();
+//         newCode.code = req.body.code;
+//         newCode.save()
+//                 .then(result =>{
+//                     console.log(result)
+//                     return done(null, newCode)
+
+//                 })
+//                 .catch(err =>{
+//                     return done(err)
+//                 })
+
+        // newUser.save(function(err) {
+        //     if (err) {
+        //         return done(err);
+        //     }
+
+        //     return done(null, newUser);
+        // })
+
+    // })
+// }))

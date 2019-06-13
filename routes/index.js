@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-// var localStrategy = require('passport-local').Strategy
 const controller = require("../controllers/frontendController");
-// let code = require("../models/codes")
 let user = require("../models/user")
 
 
@@ -17,21 +15,23 @@ router.get("/signup", controller.signup);
 
 router.post('/qrcode', controller.qrcode);
 
-router.get("/register", controller.register);
+router.get("/register/:userCode", controller.register);
 router.get("/login", controller.login)
 router.get("/profile", isLoggedIn, controller.profile)
 
 router.post('/register/students', passport.authenticate('local.register', {
     successRedirect: "/profile",
     failureRedirect: "/register",
-    failueFlash: true
+    failureFlash: true
 }));
 
 router.post('/login/Students', passport.authenticate('local.login', {
     successRedirect: "/profile",
     failureRedirect: "/login",
-    failueFlash: true
+    failureFlash: true
 }));
+
+
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

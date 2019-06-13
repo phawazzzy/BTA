@@ -2,12 +2,12 @@ let code = require("../models/codes")
 let User = require("../models/user")
 const qr = require('qr-image');
 const fs = require('fs');
+const url = require('url');
 
-exports.homepage = (req, res, next) => {
-    User.find().then(result => {
-
-    })
-    res.render("index", { title: "HOME" })
+exports.homepage = (req, res, next)=>{
+    let usedCode = req.flash("usedCode")
+    let inexistence = req.flash("inexistence")
+    res.render("index", {title: "HOME", inexistence, usedCode})
 };
 
 exports.signup = (req, res, next) => {
@@ -16,35 +16,60 @@ exports.signup = (req, res, next) => {
 
 exports.validateCode = async (req, res, next) => {
     userCode = req.body.code;
-    let codes = await code.findOne({ code: userCode })
-    if (codes
-        // && codes.isRegistered == true
-    ) {
+    let codes =  await code.findOne({code:userCode})
+   
+     if (codes && codes.isRegistered == false){
         console.log(userCode)
-        res.redirect("/register")
-    } else {
-        res.redirect("/")
-    }
+        
+        // req.flash("mustUse", `${userCode} code has been registered make sure you complete your registration 
+        // immediately otherwise you will lose the validaty of the code thanks`)
+        res.redirect(`/register/${userCode}`)
+    } else if(codes && codes.isRegistered == true){
+        req.flash("usedCode", `the pin "${userCode}" has been used, Try to login if you have an account`)
+       res.redirect("/")
+   } else{
+       req.flash("inexistence", `the pin "${userCode}" doesn't exist`)
+       res.redirect("/")
+   }
 }
 
-exports.code = (req, res, next) => {
-    res.render("postcode")
+exports.code =(req, res, next) =>{
+    let pinposted = req.flash("pinposted")
+
+    res.render("postcode", {pinposted})
 }
 
 
-exports.postCode = async (req, res, next) => {
-    let DATA = {
+exports.postCode =  async(req, res, next)=>{
+ let DATA = {
         code: req.body.code
     }
-    await code.create(DATA)
-    res.render("postcode", {})
+     code.create(DATA).then(result=>{
+       req.flash("pinposted", `the pin has been succefully added to the DB`)
+
+         console.log("success")
+        res.redirect("/postcode", )
+
+     }).catch(err=>{
+         
+         console.log(err)
+     })
 }
 
 
-exports.register = (req, res, next) => {
+exports.register = async (req, res, next)=>{
     let success = req.flash("success")
+    let mustUse =req.flash("mustUse")
+    let codegagan = req.params.userCode;
+    let page = await code.findOne({code: codegagan, isRegistered: false})
+    console.log(page)
 
-    res.render("register", { title: "register", success })
+    if (page){
+    res.render("register", {title: "register", codegagan, mustUse, success})            
+    } else {
+        res.send('ole ni e oobii')
+    }
+    
 }
 
 exports.login = (req, res, next) => {

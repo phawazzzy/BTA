@@ -20,7 +20,9 @@ const fs = require('fs');
 dotenv.config();
 
 
-var db_uri = process.env.DB_URI;
+// var db_uri = "mongodb://localhost:27017/BTA" ;
+var db_uri = process.env.DB_URI ;
+
 
 mongoose.connect(db_uri, { useNewUrlParser: true, useCreateIndex: true }).then(console.log("database connected")).catch(err => console.log(err));
 
@@ -77,6 +79,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 
 
