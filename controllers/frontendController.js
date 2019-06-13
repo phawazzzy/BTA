@@ -48,26 +48,19 @@ exports.postCode =  async(req, res, next)=>{
     }
   let check =  await code.findOne({code: req.body.code})
         if (check){
-            req.flash("pinExist", `the pin wasn,t  added to the DB because it exist`)
-
+            req.flash("pinExist", `the pin wasn't added to the DB because it exist already`)
             console.log("code exist already")
             res.redirect("/postcode", )
-
         }else{
             code.create(DATA).then(result=>{
                 req.flash("pinposted", `the pin has been succefully added to the DB`)
-         
-                  console.log("success")
-                 res.redirect("/postcode", )
-         
-              }) .catch(err=>{
-         
+                console.log("success")
+                res.redirect("/postcode", )
+             }).catch(err=>{
                 console.log(err)
             })
         }
-    
-    
-}
+    }
 
 
 exports.register = async (req, res, next)=>{
@@ -76,7 +69,6 @@ exports.register = async (req, res, next)=>{
     let codegagan = req.params.userCode;
     let page = await code.findOne({code: codegagan, isRegistered: false})
     console.log(page)
-
     if (page){
     res.render("register", {title: "register", codegagan, mustUse, success})            
     } else {
@@ -156,9 +148,11 @@ exports.qrcode = (req, res, next) => {
             var qr_png = qr.imageSync(qr_txt, { type: 'png' })
             console.log("generated Qr-code")
 
-            fs.writeFileSync('./public/qr/' + qr_code_file_name, qr_png, (err) => {
+            fs.writeFileSync(`./public/qr/${qr_code_file_name}`, qr_png, (err) => {
                 if (err) {
                     console.log("err");
+                }else{
+                    console.log("barcode has been written")
                 }
 
             })
@@ -167,7 +161,7 @@ exports.qrcode = (req, res, next) => {
 
     // Send the link of generated QR code
     res.send({
-        'qr_img': "qr/" + qr_code_file_name
+        'qr_img': `qr/${qr_code_file_name}`
     });
 
 };
