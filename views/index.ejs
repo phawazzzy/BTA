@@ -99,9 +99,9 @@
   <script src="js/stylish-portfolio.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script>
-		if( "<%-loginError%>" ){
+		if( "<%#-loginError%>" ){
 			swal({
-				text: "<%=loginError%>",
+				text: "<%#=loginError%>",
 			});
     }
   </script>
