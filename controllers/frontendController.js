@@ -214,7 +214,7 @@ exports.postForget = (req, res, next) => {
                     rx: req.body.email,
                     locals: {
                         username: user.name,
-                        resetlink: `${req.protocol}:${req.hostname}/reset/${token}`
+                        resetlink: `http://basictutoracedemy.herokuapp.com/reset/${token}`
                     }
                 });
                 console.log("success")
