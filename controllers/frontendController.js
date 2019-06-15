@@ -3,6 +3,13 @@ let User = require("../models/user")
 const qr = require('qr-image');
 const fs = require('fs');
 const url = require('url');
+const crypto = require("crypto")
+const async = require("async");
+let mailSender = require("../config/mailer");
+let showError = require("../config/errorHandlers");
+let bcrypt = require("bcrypt")
+
+
 
 exports.homepage = (req, res, next)=>{
     let usedCode = req.flash("usedCode")
@@ -129,6 +136,7 @@ exports.profile = async (req, res, next) => {
     res.render("profile", { title: "PROFILE", name, matricCode, gender, deptCode, phoneNO, email, department, result, deptNum, Backnum })
 }
 
+// qr code generator
 exports.qrcode = (req, res, next) => {
     // Get the text to generate QR code
     let qr_txt = req.body.qr_text;
@@ -165,3 +173,105 @@ exports.qrcode = (req, res, next) => {
     });
 
 };
+
+// get the forget password page 
+exports.forget = (req, res, next) =>{
+    let EmailSent = req.flash("EmailSent");
+    let noUser = req.flash("noUser")
+    res.render("forget", {EmailSent, noUser})
+}
+// post the password to the database
+exports.postForget = (req, res, next) => {
+    async.waterfall([
+        // function to generate token
+        function (done) {
+            crypto.randomBytes(20, (err, buf)=>{
+                let token = buf.toString("hex")
+                done(err, token)
+            });
+        },
+        // function to check if mail supplied exists and save the token
+        function (token, done) {
+            User.findOne({email: req.body.email}, (err, user)=>{
+                if (!user){
+                    req.flash("noUser", "No account with that address exists!");
+                    return res.redirect("/forget")
+                }
+                let twenty4 =  3600000 * 24
+                user.resetPasswordToken = token;
+                user.resetPasswordExpires = Date.now() + twenty4; //expires in 24hour
+
+                user.save((err)=>{
+                    done(err, token, user);
+                });
+            });
+        },
+
+        function (token, user, done) {
+            try {
+                mailSender.sendMail({
+                    template: "../views/email/forgot",
+                    rx: req.body.email,
+                    locals: {
+                        username: user.name,
+                        resetlink: `${req.protocol}:${req.hostname}/reset/${token}`
+                    }
+                });
+                console.log("success")
+                req.flash("EmailSent", `Password  sent to ${user.email}`);
+                done(null, "done")
+            }catch(err){
+                showError(req, "POST", "/forget", err);
+                done(err, false)
+            }
+        } 
+    ], function(err){
+        if(err){
+            return next(err);
+        }
+        res.redirect("/forget")
+
+    })
+}
+
+// get the page to change the new password to your desired password
+exports.reset = (req, res, next) =>{
+    let success = req.flash("succces");
+    let error = req.flash("error")
+    User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now()}  }, (err, user)=>{
+
+        if (!user) {
+            req.flash("error", "Invalid user");
+            return res.redirect("/forget");
+        }
+        res.render("reset", {token: req.params.token, success, error})
+    });
+}
+
+// update the new password to your desired password
+exports.postReset = async (req, res, next) => {
+    try {
+        let user = await User.findOneAndDelete(
+            { resetPasswordToken: req.params.token, resetPasswordExpires:{$gt: Date.now()}},
+            {$set: {password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)), resetPasswordToken: undefined }},
+            {new: true});
+            req.flash("success", "Your password reset was succesful, please login to continue")
+
+            // send the new password users mail
+            mailSender.sendFrom({
+                template: "../views/email/reset",
+                rx: user.email,
+                locals: {
+                    siteInfo: "Basic Tutor Academy",
+                    loginInfo:{
+                        name:user.name,
+                        url: `${req.protocol}:${req.hostname}/login`
+
+                    }
+                }
+            })
+    } catch(err){
+        showError(req, "POST", `/reset/${req.params.token}`, err);
+    }
+    res.redirect("/login");
+}

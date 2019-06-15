@@ -11,14 +11,10 @@ router.get("/postcode", controller.code);
 router.post("/check", controller.postCode);
 router.post("/ValCode", controller.validateCode);
 router.get("/signup", controller.signup); 
-
-
 router.post('/qrcode', controller.qrcode);
-
 router.get("/register/:userCode", controller.register);
 router.get("/login", controller.login)
 router.get("/profile", isLoggedIn, controller.profile)
-
 router.post('/register/students', passport.authenticate('local.register', {
     successRedirect: "/profile",
     failureRedirect: "/register",
@@ -30,6 +26,11 @@ router.post('/login/Students', passport.authenticate('local.login', {
     failureRedirect: "/login",
     failureFlash: true
 }));
+
+router.get('/forget', controller.forget);
+router.post('/forget', controller.postForget);
+router.get('/reset/:token', controller.reset);
+router.post('/reset/:token', controller.postReset);
 
 
 
