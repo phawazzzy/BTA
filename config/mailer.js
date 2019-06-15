@@ -34,7 +34,7 @@ let mailer = {
             template: mailData.template,
             message: {
                 to: mailData.rx
-            }
+            },
             locals: mailData.locals
         });
     }
