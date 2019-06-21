@@ -16,6 +16,8 @@ let userSchema = new Schema({
     index: Number,
     regNO: String,
     code: String,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 })
 
 // userSchema.plugin(autoIncrement.plugin, 'user');

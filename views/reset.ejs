@@ -46,5 +46,13 @@
 
     <%#- include("../partials/dashboard-scripts") %>
 
+    <script>
+        if("<%-success%>"){
+            swal({
+                text: "<%=success%>"
+            })
+        }
+    </script>
+
 </body>
 </html>

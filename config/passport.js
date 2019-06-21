@@ -29,7 +29,7 @@ passport.use('local.register', new localStrategy({
     await Code.findOneAndUpdate({code: req.body.codegagan}, {isRegistered: true}, {upsert: true})
         .catch((err)=>{console.log(err)})
         
-    await User.findOne({ 'email': email }, function(err, user) {
+    await User.findOne({'email': email }, function(err, user) {
         if (err) {
             return done(err);
         }
@@ -94,6 +94,7 @@ passport.use('local.login', new localStrategy({
         };
 
         if (!user.validatePassword(req.body.password)) {
+            console.log("wrong password")
             req.flash("passwordError", "incorrect password")
             return done(null, false)
         };
