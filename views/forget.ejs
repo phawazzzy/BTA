@@ -49,18 +49,21 @@
     <script>
         if("<%-EmailSent%>"){
             swal({
+                icon: "success",
                 text: "<%=EmailSent%>"
             })
         }
 
         if("<%-noUser%>"){
             swal({
+                icon: "error",
                 text: "<%=noUser%>"
             })
         }
 
         if("<%-error%>"){
             swal({
+                icon: "error",
                 text: "<%=error%>"
             })
         }

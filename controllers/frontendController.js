@@ -9,6 +9,8 @@ let mailSender = require("../config/mailer");
 let showError = require("../config/errorHandlers");
 let bcrypt = require("bcrypt")
 
+let siteUrl = "https://basictutoracedemy.herokuapp.com"
+
 
 
 exports.homepage = (req, res, next) => {
@@ -265,7 +267,7 @@ exports.postForget = (req, res, next)=>{
                     rx: req.body.email,
                     locals: {
                         username: user.name,
-                        resetlink: `http://localhost:3000/reset/${token}`
+                        resetlink: `${siteUrl}/reset/${token}`
                     }
 
                 });
@@ -321,7 +323,7 @@ exports.postReset = async (req, res, next) => {
                 site: " BASIC TUTOR ACADEMY",
                 loginInfo: {
                     name: user.name,
-                    url: `${req.protocol}://${req.hostname}/login`
+                    url: `${siteUrl}/login`
                 }
             }
         });
