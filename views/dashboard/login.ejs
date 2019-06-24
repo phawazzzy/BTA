@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DASHBOARD</title>
+</head>
+<body>
+
+   <center><H1>LOGIN</H1> </center> 
+   <%=passwordError%>
+   <%=loginError%>
+   <%=roleError%>
+
+   <form action="/login/admin" method="post">
+    <input type="text" name="email" id="" required>
+    <input type="password" name="password" id="" required>
+    <!-- <input type="hidden" name="role" id="" value="admin" required> -->
+    <input type="submit" value="submit">
+
+</form>
+</body>
+</html>

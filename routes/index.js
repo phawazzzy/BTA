@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 const controller = require("../controllers/frontendController");
+const dashController = require("../controllers/dashboardController");
 let user = require("../models/user")
 
 
@@ -35,7 +36,7 @@ router.post('/reset/:token', controller.postReset);
 
 
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && req.user.role == "student") {
         return next()
     } else{
     req.flash("PleaseLogin", "Please login to continue")
@@ -47,6 +48,43 @@ router.get("/logout", function(req, res) {
     req.logout()
     res.redirect("/login")
 })
+
+//
+// DASHBOARB ROUTES
+
+router.get("/dashboard", adminLoggedIn, dashController.dashboard)
+router.get('/dashboard/adminReg', dashController.adminReg);
+router.get('/dashboard/adminLogin', dashController.adminLogin);
+
+
+ 
+router.post('/register/admin', passport.authenticate('local.adminregister', {
+    successRedirect: "/dashboard",
+    failureRedirect: "/dashboard/adminReg",
+    failureFlash: true
+}));
+
+router.post('/login/admin', passport.authenticate('local.adminLogin', {
+    successRedirect: "/dashboard",
+    failureRedirect: "/dashboard/adminLogin",
+    failureFlash: true
+}));
+
+function adminLoggedIn(req, res, next) {
+    if (req.isAuthenticated() && req.user.role == "admin") {
+        return next()
+    } else{
+    req.flash("PleaseLogin", "Please login to continue")
+    res.redirect("/dashboard/adminLogin");
+    }
+}
+
+router.get("/adminlogout", function(req, res) {
+    req.logout()
+    res.redirect("/dashboard/adminLogin")
+})
+
+
 
 
 module.exports = router;

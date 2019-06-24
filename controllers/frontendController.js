@@ -8,7 +8,6 @@ const async = require("async");
 let mailSender = require("../config/mailer");
 let showError = require("../config/errorHandlers");
 let bcrypt = require("bcrypt")
-
 let siteUrl = "https://basictutoracedemy.herokuapp.com"
 
 
@@ -228,12 +227,9 @@ exports.forget = (req, res, next) => {
 
 // post the password to the database
 
-
-
-
-
 exports.postForget = (req, res, next)=>{
     async.waterfall([
+        //function to generate the token
         function (done){
             crypto.randomBytes(20, function(err, buf){
                 let token = buf.toString('hex');
@@ -241,6 +237,7 @@ exports.postForget = (req, res, next)=>{
             });
         },
 
+        //function to check if the user exist and save the token to the user's document
         function (token, done){
             User.findOne({email: req.body.email}, function(err, user){
                 if (!user){
@@ -260,6 +257,7 @@ exports.postForget = (req, res, next)=>{
                 }
             });
         },
+        //function to send mail to the user for the password reset
         function (token, user, done) {
             try{
                 mailSender.sendMail({
@@ -308,7 +306,7 @@ exports.reset = (req, res, next) => {
 }
 
 // update the new password to your desired password
-exports.postReset = async (req, res, next) => {
+  exports.postReset = async (req, res, next) => {
     try {
         let user = await User.findOneAndUpdate(
             { resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } },
@@ -332,3 +330,6 @@ exports.postReset = async (req, res, next) => {
     }
     res.redirect("/login");
 }
+
+
+// webpush.setVapidDetails('mailto: test@test.com', process.env.publicVapidkey, process.env.privateVapidkey);

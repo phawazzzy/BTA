@@ -13,6 +13,7 @@ let userSchema = new Schema({
     phoneNo: String,
     email: String,
     password: String,
+    role: String,
     index: Number,
     regNO: String,
     code: String,

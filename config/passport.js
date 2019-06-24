@@ -51,6 +51,7 @@ passport.use('local.register', new localStrategy({
         newUser.phoneNo = req.body.phoneNo;
         newUser.email = req.body.email;
         newUser.code = req.body.codegagan;
+        newUser.role = req.body.role;
         
         newUser.password = newUser.hashPassword(req.body.password);
 
@@ -103,43 +104,73 @@ passport.use('local.login', new localStrategy({
     })
 }))
 
-// code checking
-// passport.use('local.registerCode', new localStrategy({
-//     usernameField: 'code',
-//     passwordField: '',
-//     passReqToCallback: true
-// }, function(req, code, password, done) {
+passport.use('local.adminregister', new localStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true
+}, async function(req, email, password, done) {
 
-//     Code.findOne({ 'code': code }, function(err, code) {
-//         if (err) {
-//             return done(err);
-//         }
-//         if (code) {
-//             req.flash('codeExist', "code already Exist in the database ")
+    
+        
+    await User.findOne({'email': email }, function(err, user) {
+        if (err) {
+            return done(err);
+        }
+        if (user) {
+            req.flash('userExist', "email already Exist ")
 
-//             return done(null, false);
+            return done(null, false);
 
-//         }
+        }
 
-//         let newCode = new Code();
-//         newCode.code = req.body.code;
-//         newCode.save()
-//                 .then(result =>{
-//                     console.log(result)
-//                     return done(null, newCode)
+        let newUser = new User();
+        // user2 = newUser
+        newUser.email = req.body.email;
+        newUser.role = req.body.role;
+        newUser.password = newUser.hashPassword(req.body.password);
 
-//                 })
-//                 .catch(err =>{
-//                     return done(err)
-//                 })
 
-        // newUser.save(function(err) {
-        //     if (err) {
-        //         return done(err);
-        //     }
+        newUser.save()
+                .then(result =>{
+                    console.log(result)
+                    req.flash("success", "you have successfully registered")
+                    return done(null, newUser)
 
-        //     return done(null, newUser);
-        // })
+                })
+                .catch(err =>{
+                    return done(err)
+                })
 
-    // })
-// }))
+    })
+}))
+
+
+passport.use('local.adminLogin', new localStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true
+}, function(req, email, password, done) {
+
+    User.findOne({ 'email': email }, function(err, user) {
+        if (err) {
+            return done(err);
+        }
+        if (!user) {
+            req.flash('loginError', "user Email not found")
+            return done(null, false);
+        };
+
+        if(user.role != "admin"){
+            req.flash('roleError', "user not an admin")
+            return done(null, false);
+        }
+
+        if (!user.validatePassword(req.body.password)) {
+            console.log("wrong password")
+            req.flash("passwordError", "incorrect password")
+            return done(null, false)
+        };
+        return done(null, user)
+
+    })
+}))
