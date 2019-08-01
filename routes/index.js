@@ -16,6 +16,7 @@ router.post('/qrcode', controller.qrcode);
 router.get("/register/:userCode", controller.register);
 router.get("/login", controller.login)
 router.get("/profile", isLoggedIn, controller.profile)
+router.post("/update", controller.updateDetails)
 router.post('/register/students', passport.authenticate('local.register', {
     successRedirect: "/profile",
     failureRedirect: "/register",
@@ -55,6 +56,7 @@ router.get("/logout", function(req, res) {
 router.get("/dashboard", adminLoggedIn, dashController.dashboard)
 router.get('/dashboard/adminReg', dashController.adminReg);
 router.get('/dashboard/adminLogin', dashController.adminLogin);
+router.get("/dashboard/students",  dashController.student)
 
 
  
@@ -84,6 +86,10 @@ router.get("/adminlogout", function(req, res) {
     res.redirect("/dashboard/adminLogin")
 })
 
+
+router.get("/result", controller.result);
+router.get('/post_result', adminLoggedIn, dashController.post_result)
+router.post('/sub_resut', dashController.sub_result)
 
 
 

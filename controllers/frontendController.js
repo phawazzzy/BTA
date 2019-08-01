@@ -1,5 +1,7 @@
 let code = require("../models/codes")
 let User = require("../models/user")
+let result = require("../models/result")
+
 const qr = require('qr-image');
 const fs = require('fs');
 const url = require('url');
@@ -116,6 +118,8 @@ exports.login = (req, res, next) => {
 }
 
 exports.profile = async (req, res, next) => {
+    let updated = req.flash("updated");
+    let me = req.flash("yoo")
     // code to check the index for a particular document
     let log = req.user.email
     let result = await User.find()
@@ -157,6 +161,15 @@ exports.profile = async (req, res, next) => {
     } else {
         deptCode = ""
     }
+
+    let regNum = `BTA-${matricCode.slice(0, 2)}${deptCode}-${deptNum}${Backnum}`
+    User.findOne({regNum: req.user.regNum}).then(result=>{
+        if(result.regNum){
+        console.log(result.regNum)
+
+        }
+    })
+   
     res.render("profile", {
         title: "PROFILE",
         name,
@@ -168,9 +181,14 @@ exports.profile = async (req, res, next) => {
         department,
         result,
         deptNum,
-        Backnum
+        Backnum,
+        regNum,
+        updated,
+        me,
     })
 }
+
+
 
 // qr code generator
 exports.qrcode = (req, res, next) => {
@@ -285,6 +303,29 @@ exports.postForget = (req, res, next)=>{
     })
 }
 
+exports.updateDetails = (req, res, next)=>{
+
+    
+    User.findOne({email: req.user.email}, (err, user, done)=>{
+        if(!user){
+            req.flash("unable", "You can't update")
+            console.log("No account with that email address exists!")
+            return res.redirect("/profile");
+        }
+        user.regNum = req.body.regNum
+        
+
+        user.save()
+            .then(result=>{
+                console.log( result.regNum, `document has been updated`);
+                req.flash("updated", `${req.user.firstName}, your profile has been updated`)
+                done(err, user)
+            })
+            res.redirect("/profile")
+    })
+
+}
+
 // get the page to change the new password to your desired password
 exports.reset = (req, res, next) => {
     let success = req.flash("succces");
@@ -329,6 +370,13 @@ exports.reset = (req, res, next) => {
         showError(req, "POST", `/reset/${req.params.token}`, err);
     }
     res.redirect("/login");
+}
+
+
+exports.result = async(req, res, next)=>{
+    let results = await result.find()
+    console.log(results)
+    res.render("result", {results})
 }
 
 

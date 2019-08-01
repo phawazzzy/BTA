@@ -15,7 +15,7 @@ let userSchema = new Schema({
     password: String,
     role: String,
     index: Number,
-    regNO: String,
+    regNum: String,
     code: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date

@@ -56,7 +56,9 @@
         <!-- Registration Number -->
         <div class="detail-wrapper">
           <label for="Registration-no">Registration Number:</label>
-          <h5 id="gentext"><%= "BTA-" + matricCode.slice(0, 2) + deptCode + "-" + deptNum + Backnum %></h5>
+          <!-- <h5 id="gentext"><%#= "BTA-" + matricCode.slice(0, 2) + deptCode + "-" + deptNum + Backnum %></h5> -->
+          <h5 id="gentext"><%= regNum %></h5>
+
         </div>
 
         <!-- Gender-->
@@ -82,6 +84,13 @@
           <div id="profile_qr-code" style="height: 150px;">
             <img src="" alt="qr-code" id="qr-code-img">
           </div>
+        </div>
+
+        <div class="detail-wrapper" id="button">
+          <form action="/update" method="post">
+           <label for=""> <input type="text" name="regNum" value="<%=regNum%>" > </label>
+            <input type="submit" class="btn btn-primary"   value="Update profile">
+          </form>
         </div>
 
         
@@ -119,6 +128,16 @@
     xhttp.open("POST", "/qrcode", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("qr_text=" + txt);
+  </script>
+
+  <script>
+    
+    if("<%-me%>"){
+      console.log("yoooo")
+      document.getElementById("button").style.display = "none"
+    }else{
+      console.log("noooo yooo")
+    }
   </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

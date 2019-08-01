@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Table V03</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor2/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor2/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor2/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor2/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="icon" type="image/jpg" sizes="16x16" href="/images/BTA.jpg">
+    
+<!--===============================================================================================-->
+</head>
+<body>
+       <!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">BTA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/result">Results</a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+    
+      <!-- Header -->
+
+        <h1 style="text-align: center">MAT 111 RESULT</h1>
+        <br>  <br>
+	<div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    	<div class="table100 ver6 m-b-110">
+                                <table data-vertable="ver6">
+                                    <thead>
+                                        <tr class="row100 head">
+                                            <th class="column100 column1" data-column="column1"></th>
+                                            <th class="column100 column2" data-column="column2">Matric Num</th>
+                                            <th class="column100 column3" data-column="column3">Dept</th>
+                                            <th class="column100 column4" data-column="column4">score</th>
+                                          
+                                    </thead>
+                            <% for (let i=0; i< results.length; i++ ) {%>
+
+
+                                    <tbody>
+
+                                        <tr class="row100">
+                                            <td class="column100 column1" data-column="column1"><%= results[i].name%></td>
+                                            <td class="column100 column2" data-column="column2"><%= results[i].matricNo%></td>
+                                            <td class="column100 column3" data-column="column3"><%= results[i].department%></td>
+                                            <td class="column100 column4" data-column="column4"><%= results[i].score%></td>
+                                         
+                                        </tr>
+
+            
+                                    </tbody>
+                                <% } %>
+
+                                </table>
+                            </div>
+                </div>
+            </div>
+    </div>
+
+
+    <!--===============================================================================================-->	
+	<script src="vendor2/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="vendor2/bootstrap/js/popper.js"></script>
+        <script src="vendor2/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="vendor2/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="js/main.js"></script>
+</body>
+</html>
